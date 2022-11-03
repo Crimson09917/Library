@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Life</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+<!-- <svg id="canvas" height="1000" width="1000"></svg> -->
+<form id="toolbar">
+    <button type="button" onclick="window.location.reload()">Reload</button>
+    <br><br>
+    <label>Alive colour:</label>
+    <input id="aliveColour" type="text" class="textbox" value="white"><br>
+    <label>Dead colour:</label>
+    <input id="deadColour" type="text" class="textbox" value="black"> <br>
+    
+    <button type="button" onclick="setColours()">Set Colours</button>
+    <button type="button" onclick="invertColours()">Invert Colours</button>
+    <br><br>
+
+
+    <br>
+    <label>Canvas width:</label>
+    <input id= "width" type="text" class="textbox" value="100"><br>
+    <label>Canvas height:</label>
+    <input id="height" type="text" class="textbox" value="100"> <br>
+    
+    <button type="button" onclick="createCanvas()">Create/Clear</button>
+    <br><br>
+
+    <label for="weight">Input weight:</label> <br>
+    <input id="weight" class="textbox" type="text">
+    <button type="button" onclick="generate()">+</button> <br> <br>
+
+    <label>Play:</label>
+    <button type="button" onclick="play()">+</button> <br> <br>
+
+    <label>Pause:</label>
+    <button type="button" onclick="pause()">+</button> <br> <br>
+
+    <input type="range" id="clock" min="0" max="1000" step="100" value="0"> <br> <br>
+
+    <label>Symmetry Modes:</label> <br>
+    <label>Vertical:</label>
+    <input type="checkbox" id="vertical" onclick="checkbox('vertical')"> <br>
+
+    <label>Horizontal:</label>
+    <input type="checkbox" id="horizontal" onclick="checkbox('horiztonal')"> <br> <br>
+
+    <label>Toggle Border: </label>
+    <input type="checkbox" onclick="activateBorder()"><br>
+
+    <input class="textbox" id="borderState" value="#1E1E1E" type="text"> <br><br>
+
+    <div id="radios">
+        <input id="none" type="radio" name="preset" onclick="radio('none')">None<br>
+        <input id="line" type="radio" name="preset" onclick="radio('line')">Line<br>
+        <input id="pulsar" type="radio" name="preset" onclick="radio('pulsar')">Pulsar<br>
+        <input id="gliderGun" type="radio" name="preset" onclick="radio('gliderGun')">Glider Gun<br>
+        <input type="radio" name="preset">
+    </div>
+    <br><br>
+    <button type="button" onclick="createOrigin()">Create Preset</button><br><br>
+    
+    
+    <label>Toggle RGB: </label>
+    <input type="checkbox" onclick="rgb()"><br>
+
+    <label>Toggle Epilepsy: </label>
+    <input type="checkbox" onclick="epilepsy()"><br><br>
+    <button type="button" class="based" onclick="spaceMovie()">+</button>
+</form>
+<div id="canvas"></div>
+
+<script src="life.js" lang="js" type="text/javascript"></script>
+<script src="presets.js" lang="js"></script>
+</body>
+</html>

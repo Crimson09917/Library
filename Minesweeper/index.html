@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Minesweeper</title>
+
+    <style>
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .text-white {
+            color: white;
+        }
+        .pixel{
+            color: white;
+            background-color: rgb(0,154,23);
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #grid{
+            display: inline-flex;
+            background-color: darkslateblue;
+        }
+        form{
+            height: 500px;
+            width: 200px;
+        }
+        body{
+            padding: 20px;
+            background-color: rgb(39, 21, 7);
+        }
+        .floatChild{
+            float: left;
+        }
+        .icon{
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form class="floatChild" id="form">
+        <h3 class="text-white">Setup:</h3>
+        <label class="text-white">Number of rows:</label>
+        <br>
+        <input id="x" type="number" value="50">
+        <br>
+        <label class="text-white">Number of columns:</label>
+        <br>
+        <input id="y" type="number" value="50">
+        <br>
+        <button type="button" onclick="submitNow()">Create board</button>
+        <h3 class="text-white">Generate mines:</h3>
+        <label class="text-white" for="fixed">Fixed amount:</label>
+        <input class="text-white" type="radio" id="fixed" name="mineType" value="fixed">
+        <br>
+        <label class="text-white" for="weight">Weight:</label>
+        <input type="radio" id="weight" name="mineType" value="weight">
+        <input id="minesInput" type="number"> 
+        
+        <br>
+        <button type="button" onclick="generate_mines()">Generate mines</button>
+
+        <br><br>
+        
+        <button type="button" onclick="initialise()">START GAME</button><br><br>
+
+        <label class="text-white" id="counterLabel">Flags placed:</label>
+        <p class="text-white" id="counter"></p><br>
+
+        <p class="text-white" id="feedback"></p>
+    </form>
+    <div class="floatChild" id="grid" oncontextmenu="return false;"></div>
+    <script src="minesweeper.js"></script>
+</body>
+</html>

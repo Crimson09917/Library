@@ -1,0 +1,35 @@
+.pixel{
+    width: 10px;
+    height: 10px;
+    display: inline;
+}
+body{
+    background-color: #0e0000;
+    margin-top: 50px;
+}
+.row{
+    display: flex;
+}
+#canvas{
+    display: inline-block;
+    border: 5px;
+    border-style: solid;
+    border-color: red;
+}
+#toolbar{
+    display: inline-block;
+    color: white;
+    border: 5px;
+    border-style: dashed;
+    border-color: red;
+    width: 150px;
+    height: 1000px;
+    vertical-align: top;
+    padding: 1px;
+}
+.textbox{
+    width: 100px;
+}
+.based{
+    align-self: baseline;
+}

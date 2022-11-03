@@ -1,0 +1,58 @@
+body {
+    margin-top: 5;
+    background-color: black;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    padding: 2rem;
+    color: #3f0;
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px #3f0;
+}
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+    pointer-events: none;
+}
+::selection {
+    background: #0080ff;
+    text-shadow: none;
+}
+pre {
+    margin-top: 5;
+    margin: 0;
+}
+.userInput{
+    color: white;
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px #3f0;
+}
+a:link{
+    padding: 2rem;
+    color: #3f0;
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px #3f0;
+}
+a:visited{
+    padding: 2rem;
+    color: #3f0;
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px #3f0;
+}
+a:hover{
+    padding: 2rem;
+    color: #3f0;
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px #3f0;
+}
+a:active{
+    padding: 2rem;
+    color: #3f0;
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px #3f0;
+}
