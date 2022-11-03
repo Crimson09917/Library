@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    <style>
+        
+        </style>
+        <link rel="stylesheet" href="styles.css">
+    <title>Stats and Mechanics</title>
+</head>
+<body>
+    <label>One frequency calculation (Separate with spaces)</label><br>
+    <input id="oneVariableInput" type="text">
+
+    <button type="button" onclick="execute1()">Execute</button>
+
+    <ul id="output1"></ul>
+    <br><br>
+    <table id="freqTable">
+        <tr>
+            <th>Value</th>
+            <th>Frequency</th>
+        </tr>
+    </table>
+    <button id="removeRow" onclick="removeRow('freqTable')">Remove row</button>
+    <br>
+    <button id="addRow" onclick="addRow('freqTable')">Add row</button><br><br>
+    <button onclick="execute2()">Execute frequency</button>
+    
+    <br><br><br>
+
+    <label>X ~ B(</label>
+    <input class="single" id="binomialN" type="number">
+    <label>, </label>
+    <input id="binomialP" class="single" type="number">
+    <label>)</label>
+    
+    <br><br>
+
+    <label id="changing">P(X = </label>
+    <input id="binomialX" class="single" type="number">
+    <label>)</label>
+    <label>  Operator:</label>
+    <select id="operator" onchange="changeOperator()">
+        <option value="=">=</option>
+        <option value="<=">&lt;=</option>
+        <option value=">=">&gt;=</option>
+        <option value="<">&lt;</option>
+        <option value=">">&gt;</option>
+    </select>
+    
+    <br>
+    <button onclick="execute3()">Execute</button>
+    <button onclick="execute4()">Create a table</button>
+
+    <br><br>
+
+    <table id="output2"></table>
+    <br><br>
+
+    <label>Significance level: </label>
+    <input type="number">%<br>
+
+    <label>Type of test: </label>
+    <select id="testType">
+        <option value="<">One-tailed (&lt;)</option>
+        <option value=">">One-tailed (&gt;)</option>
+        <option value="!=">Two-tailed (!=)</option>
+    </select><br>
+
+    <button onclick="execute6()">Plot graph</button><br>
+    <canvas id="probabilityGraph" style="width:100%;max-width:700px"></canvas>
+    <br><br>
+    <table id="scatterTable">
+        <tr>
+            <th>x</th>
+            <th>y</th>
+        </tr>
+    </table>
+    <button id="removeRow" onclick="removeRow('scatterTable')">Remove row</button>
+    <br>
+    <button id="addRow" onclick="addRow('scatterTable')">Add row</button><br><br>
+    <button onclick="execute5()">Make a graph</button><br>
+    <canvas id="scatterGraph" style="width:100%;max-width:700px"></canvas>
+
+    <script src="stats_script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</body>
+</html>

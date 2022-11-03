@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <title>Kinematic Equations</title>
+    <style>
+        #form{
+            text-align: center;
+            margin: 10px;
+            display: inline-flex;
+        }
+        #subject{
+            width: 105px;
+            height: 20px;
+        }
+        #equation,#substitution,#calculation{
+            font-size: 70px;
+        }
+        #marginify{
+            padding-left: 50px;
+        }
+        .inputs{
+            margin-left: 10px;
+        }
+        #output{
+            text-align: center;
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Kinematics</h1>
+    <button onclick="location.reload()">Reload</button>
+    <br>
+    <form id="form">
+        <div>
+            <h3>Subject:</h3>
+            <select id="subject" name="subject">
+                <option value="s">displacement</option>
+                <option value="u">initial velocity</option>
+                <option value="v">final velocity</option>
+                <option value="a">acceleration</option>
+                <option value="t">time</option>
+            </select>
+        </div>
+        <div class="inputs">
+            <h3>Missing value:</h3>
+            <select id="missing" name="missing">
+                <option value="s">displacement</option>
+                <option value="u">initial velocity</option>
+                <option value="v">final velocity</option>
+                <option value="a">acceleration</option>
+                <option value="t">time</option>
+            </select>
+        </div class="inputs">
+    </form>
+    <br>
+    <div id="values" class="inputs"></div>
+    <br>
+
+    <button type="button" onclick="execute()">Find my equation</button>
+    <div id="output">
+        <h3 style="font-size: 40px;">Equation:</h3>
+        <p id="equationBlock">
+            <div display="block" id="equation"></div>
+            <div display="block" id="substitution"></div>
+            <div display="block" id="calculation"></div>
+        </p>
+    </div>
+</body>
+</html>

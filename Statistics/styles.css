@@ -1,0 +1,29 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50px;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    text-align: center;
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+.single{
+    width: 50px;
+}
+.tableArea{
+    width: 100px;
+    height: 30px;
+}
+
+#output2{
+    width: 1000px
+}
+
+.leftSide{
+    text-align: right;
+}
