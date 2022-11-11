@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="styling.css">
+</head>
+<body>
+    <div id="rightSide">
+        <div id="mapDiv"><img draggable="false" (dragstart)="false;" class="unselectable" src="images/us.svg" id="map"/></div>
+        <div id="infoBox">
+            <p>TIME:
+                <span id="clock" style="font-family: digital-clock-font;">02:44:53</span>
+                <span>     </span>
+                <span>DETONATION:</span> 
+                <span id="countdown" class="RED" style="font-family: digital-clock-font">14:00:00</span>
+            </p>
+            <p>
+                DEATHS:<span id="deaths" class="RED" style="position: absolute; right:740px">0</span>
+            </p>
+            <p>
+                EVACUATIONS:<span id="evacuations" class="BLUE" style="position: absolute; right:740px">0</span>
+            </p>
+        </div>
+    </div>
+    <script src="resources/states.js"></script>
+    <script src="resources/svgSaved.js"></script>
+    <script src="resources/main.js"></script>
+    <script src="resources/methods.js">
+</body>
+</html>

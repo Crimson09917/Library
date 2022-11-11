@@ -1,0 +1,74 @@
+body {
+    margin-top: 5;
+    background-color: black;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    padding: 2rem;
+    color: #3f0;
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px #3f0;
+}
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+    pointer-events: none;
+}
+::selection {
+    background: #0080ff;
+    text-shadow: none;
+}
+pre {
+    margin-top: 5;
+    margin: 0;
+}
+.userInput{
+    color: white;
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px #3f0;
+}
+#map{
+    right:0;
+}
+@font-face{
+    font-family:'digital-clock-font';
+    src: url('fonts/digital-7\ \(mono\).ttf');
+   }
+#infoBox{
+    right:0px;
+}
+#clock{
+    /* position: absolute; */
+    top: 0px;
+    right: 0px;
+}
+
+#rightSide{
+    position: absolute;
+    right: 0px;
+    top:0px;
+}
+#rightSide p{
+    font-size: 30px;
+}
+.RED{
+    color: red;
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px red;
+    font-size: 30px;
+}
+.BLUE{
+    color: rgb(67, 95, 255);
+    font: 1.3rem "Courier New", monospace;
+    text-shadow: 0 0 5px rgb(67, 95, 255);
+    font-size: 30px;
+}
+.righters{
+    position: absolute;
+    right: 500px;
+}
