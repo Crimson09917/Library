@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <title>Nuclear Interactions</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="calculations">
+        <div id="leftSide">
+            <button onclick="addLeftSide()">Add particle</button>
+        </div>
+        
+        <br>
+        
+        <button onclick="removeLeftSide()">Remove particle</button>
+        
+        <br><br>
+        
+        <span>=</span>
+        
+        <br><br>
+        
+        <div id="rightSide">
+            <button onclick="addRightSide()">Add particle</button>
+        </div>
+        
+        <br>
+        
+        <button onclick="removeRightSide()">Remove particle</button>
+        
+        <br><br><br>
+        
+        <button onclick="calculate()">CALCULATE</button>
+        
+        <br><br><br>
+
+        <span>Activate antiparticles:</span><input type="checkbox" value="true" />
+    </div>
+    <br><br><br>
+    <div id="feedback"></div>
+    <script src="resources.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
