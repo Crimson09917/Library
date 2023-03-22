@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <title>Flagle</title>
+    <style>
+        
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js" integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+</head>
+<body>
+    <h1 style="color: white;">Flagle</h1>
+    <br><br><br>
+
+    <div id="mainContainer" style="height: 500px;" class="container">
+        <img id="country_img" src="none" width="500px">
+        <div id="rectangle1" class="rectangle" style="height: 33px;"></div>
+        <div id="rectangle2" class="rectangle" style="height: 33px;"></div>
+        <div id="rectangle3" class="rectangle" style="height: 33px;"></div>
+        <div id="rectangle4" class="rectangle" style="height: 33px;"></div>
+        <div id="rectangle5" class="rectangle" style="height: 33px;"></div>
+        <div id="rectangle6" class="rectangle" style="height: 33px;"></div>
+    </div>
+
+    <br><br>
+    <div id="textContainer">
+        <select style="color: black;" class="2select" name="country" id="countrySelect">
+        </select>
+
+        <button style="width: 80px; height: 30px;" onclick="guess()">Guess</button>
+        <br><br>
+        <p style="margin-bottom: 0;">Guesses:</p>
+        <br>
+        <p style="margin-top: 0;" id="guessList"></p>
+    </div>
+
+    <script src="resources.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
