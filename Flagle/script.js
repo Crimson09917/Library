@@ -56,7 +56,7 @@ function play(){
     var ratio = flagDictionary[countryImg].ratio
     console.log(ratio)
 
-    document.getElementById("country_img").src = `flags/${countryImg}`
+    document.getElementById("country_img").src = `resources/${countryImg}`
     document.getElementById("mainContainer").style.height = 500*ratio
     for(let i=1;i<7;i++){
         document.getElementById(`rectangle${i}`).style.height = (500*ratio)/2
