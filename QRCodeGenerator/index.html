@@ -193,12 +193,12 @@
   const labelText   = document.getElementById('labelText');
   const generateBtn = document.getElementById('generateBtn');
 
-  // These two wrappers are the siblings above/below the QR in your layout:
   const container   = document.querySelector('.container');
-  const topGroup    = container.children[0]; // label + dropdown
-  const bottomGroup = container.children[2]; // code text + button (disclaimer is absolute)
+  const topGroup    = container.children[0];
+  const bottomGroup = container.children[2];
 
-  let lastCode = ''; // remember current code for resize reflow
+  let lastCode = '';
+  let menuOpen = false;
 
   /* ---------- Helpers ---------- */
   const isAlphanumericQR = s => /^[0-9A-Z $%*+\-./:]+$/.test(s);
@@ -212,51 +212,36 @@
     } catch { return null; }
   }
 
-  // Build QR starting at v1 and bump until it fits (L level)
   function buildQR(text) {
     const ecLevel = 'L';
     const mode = isAlphanumericQR(text) ? 'Alphanumeric' : 'Byte';
     for (let v = 1; v <= 10; v++) {
       const qr = tryMakeQR(text, v, ecLevel, mode);
-      if (qr) {
-        const modules = qr.getModuleCount();
-        const chosenVersion = Math.round((modules - 21) / 4 + 1);
-        console.log(`QR version: v${chosenVersion}, modules: ${modules}×${modules}, mode: ${mode}`);
-        return qr;
-      }
+      if (qr) return qr;
     }
-    return tryMakeQR(text, 0, 'L', mode); // fallback (auto)
+    return tryMakeQR(text, 0, 'L', mode);
   }
 
-  // Compute the largest integer-pixel size that:
-  //  - is <= 50% of viewport width, and
-  //  - fits vertically between topGroup and bottomGroup (no overlap)
   function computeBestSize(moduleCount) {
-    const vwTarget = Math.floor(window.innerWidth * 0.5); // 50vw in px
+    const vwTarget = Math.floor(window.innerWidth * 0.5);
     const topH     = topGroup.getBoundingClientRect().height;
     const bottomH  = bottomGroup.getBoundingClientRect().height;
-    const margins  = 24; // small breathing room
+    const margins  = 24;
     const maxByHeight = Math.floor(window.innerHeight - topH - bottomH - margins);
-
-    // pick the smaller of width target and vertical allowance
     const rawTarget = Math.max(0, Math.min(vwTarget, maxByHeight));
-
-    // snap to an integer multiple of module count to avoid anti-alias gaps
     const moduleSize = Math.max(1, Math.floor(rawTarget / moduleCount));
-    return moduleSize * moduleCount; // final integer pixel size
+    return moduleSize * moduleCount;
   }
 
-  // Render from matrix -> our own SVG (no background, no transforms)
   function renderQRCode(text) {
     const qr = buildQR(text);
     const n = qr.getModuleCount();
-
     const sizePx = computeBestSize(n);
 
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', `0 0 ${n} ${n}`);
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    svg.setAttribute('shape-rendering', 'crispEdges'); // remove “grid lines”
+    svg.setAttribute('shape-rendering', 'crispEdges');
     svg.style.width  = sizePx + 'px';
     svg.style.height = sizePx + 'px';
     svg.style.display = 'block';
@@ -270,7 +255,6 @@
           rect.setAttribute('width', 1);
           rect.setAttribute('height', 1);
           rect.setAttribute('fill', '#000');
-          // crisp edges at rect level too (Safari)
           rect.setAttribute('shape-rendering', 'crispEdges');
           svg.appendChild(rect);
         }
@@ -315,22 +299,34 @@
     codeText.textContent = lastCode;
   }
 
-  /* ---------- Events ---------- */
-  if (colorMenu) {
-    colorMenu.querySelectorAll('div').forEach(item => {
-      item.addEventListener('click', () => {
-        const newColor = item.textContent.trim();
-        colorButton.textContent = newColor;
-        regenerateAll(newColor);
-      });
-    });
-  }
+  /* ---------- Menu toggle behaviour ---------- */
+  colorButton.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    colorMenu.style.display = menuOpen ? 'block' : 'none';
+  });
 
+  document.addEventListener('click', e => {
+    if (!colorMenu.contains(e.target) && e.target !== colorButton) {
+      colorMenu.style.display = 'none';
+      menuOpen = false;
+    }
+  });
+
+  colorMenu.querySelectorAll('div').forEach(item => {
+    item.addEventListener('click', () => {
+      const newColor = item.textContent.trim();
+      colorButton.textContent = newColor;
+      regenerateAll(newColor);
+      colorMenu.style.display = 'none';
+      menuOpen = false;
+    });
+  });
+
+  /* ---------- Buttons ---------- */
   generateBtn.addEventListener('click', () => {
     regenerateAll(colorButton.textContent.trim());
   });
 
-  // Reflow on resize to keep 50vw target and avoid overlap/gaps
   window.addEventListener('resize', () => {
     if (lastCode) renderQRCode(lastCode);
   });
@@ -341,6 +337,7 @@
     regenerateAll('PINK');
   });
 </script>
+
 
 
 
