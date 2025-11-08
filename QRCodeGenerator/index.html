@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Bag QR Generator</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+
+<style>
+  :root {
+    --brown-bg: #EDDAC7;
+    --purple-bg: #F3E5F5;
+    --pink-bg: #FFF0F5;
+    --green-bg: #F0FFF0;
+    --blue-bg: #E6F0FA;
+    --grey-bg: #D7D7D7;
+
+    --brown-dark: #A52A2A;
+    --purple-dark: #800080;
+    --pink-dark: #E9458B;
+    --green-dark: #90EE90;
+    --blue-dark: #87CEEB;
+    --grey-dark: #808080;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Roboto', system-ui, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+
+  .container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    font-size: 1rem;
+    margin: 0 0 1rem 0; /* increased space between text and button */
+    font-weight: 400;
+    color: var(--pink-dark);
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .color-button {
+    background-color: var(--pink-dark);
+    color: white;
+    border: none;
+    padding: 0.6rem 2rem;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    min-width: 100%;
+    z-index: 1;
+    left: 0; /* aligns perfectly under the button */
+  }
+
+  .dropdown-content div {
+    color: black;
+    padding: 0.6rem 1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .dropdown-content div:hover {
+    background-color: #e0e0e0;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  #qrcode canvas {
+    width: 50vw !important;
+    height: 50vw !important;
+    max-width: 240px;
+    max-height: 240px;
+  }
+
+  #codeText {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #000;
+  }
+
+  #generateBtn {
+    font-size: 1rem;
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    background-color: var(--pink-dark);
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: 0.2s ease;
+  }
+
+  #generateBtn:hover {
+    opacity: 0.9;
+  }
+
+  small {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #777;
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div>
+    <h2 id="labelText">Bakery Animal Feed</h2>
+    <div class="dropdown">
+      <button class="color-button" id="colorButton">PINK</button>
+      <div class="dropdown-content" id="colorMenu">
+        <div>BROWN</div>
+        <div>PURPLE</div>
+        <div>PINK</div>
+        <div>GREEN</div>
+        <div>BLUE</div>
+        <div>GREY</div>
+        <div>BROWN BOX</div>
+        <div>GLASS BOX</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="qrcode"></div>
+
+  <div>
+    <div id="codeText"></div>
+    <button id="generateBtn">Generate QR Code</button>
+  </div>
+
+  <small>This app is not affiliated with Tesco. Use at your own (mortal) peril.</small>
+</div>
+
+<script>
+  /* ---------- Color config ---------- */
+  const colors = {
+    "BROWN":     { bg: "var(--brown-bg)",  accent: "var(--brown-dark)",  label: "Food Waste" },
+    "PURPLE":    { bg: "var(--purple-bg)", accent: "var(--purple-dark)", label: "Community Food Connection" },
+    "PINK":      { bg: "var(--pink-bg)",   accent: "var(--pink-dark)",   label: "Bakery Animal Feed" },
+    "GREEN":     { bg: "var(--green-bg)",  accent: "var(--green-dark)",  label: "Fruit & Veg Animal Feed" },
+    "BLUE":      { bg: "var(--blue-bg)",   accent: "var(--blue-dark)",   label: "Animal By Product" },
+    "GREY":      { bg: "var(--grey-bg)",   accent: "var(--grey-dark)",   label: "General Waste" },
+    "BROWN BOX": { bg: "var(--brown-bg)",  accent: "var(--brown-dark)",  label: "Dairy Animal Feed" },
+    "GLASS BOX": { bg: "var(--blue-bg)",   accent: "var(--blue-dark)",   label: "Glass Products" },
+  };
+
+  /* ---------- Element refs ---------- */
+  const colorButton = document.getElementById('colorButton');
+  const colorMenu   = document.getElementById('colorMenu');
+  const qrcodeDiv   = document.getElementById('qrcode');
+  const codeText    = document.getElementById('codeText');
+  const labelText   = document.getElementById('labelText');
+  const generateBtn = document.getElementById('generateBtn');
+
+  // These two wrappers are the siblings above/below the QR in your layout:
+  const container   = document.querySelector('.container');
+  const topGroup    = container.children[0]; // label + dropdown
+  const bottomGroup = container.children[2]; // code text + button (disclaimer is absolute)
+
+  let lastCode = ''; // remember current code for resize reflow
+
+  /* ---------- Helpers ---------- */
+  const isAlphanumericQR = s => /^[0-9A-Z $%*+\-./:]+$/.test(s);
+
+  function tryMakeQR(text, version, ecLevel, mode) {
+    try {
+      const qr = qrcode(version, ecLevel);
+      qr.addData(text, mode);
+      qr.make();
+      return qr;
+    } catch { return null; }
+  }
+
+  // Build QR starting at v1 and bump until it fits (L level)
+  function buildQR(text) {
+    const ecLevel = 'L';
+    const mode = isAlphanumericQR(text) ? 'Alphanumeric' : 'Byte';
+    for (let v = 1; v <= 10; v++) {
+      const qr = tryMakeQR(text, v, ecLevel, mode);
+      if (qr) {
+        const modules = qr.getModuleCount();
+        const chosenVersion = Math.round((modules - 21) / 4 + 1);
+        console.log(`QR version: v${chosenVersion}, modules: ${modules}×${modules}, mode: ${mode}`);
+        return qr;
+      }
+    }
+    return tryMakeQR(text, 0, 'L', mode); // fallback (auto)
+  }
+
+  // Compute the largest integer-pixel size that:
+  //  - is <= 50% of viewport width, and
+  //  - fits vertically between topGroup and bottomGroup (no overlap)
+  function computeBestSize(moduleCount) {
+    const vwTarget = Math.floor(window.innerWidth * 0.5); // 50vw in px
+    const topH     = topGroup.getBoundingClientRect().height;
+    const bottomH  = bottomGroup.getBoundingClientRect().height;
+    const margins  = 24; // small breathing room
+    const maxByHeight = Math.floor(window.innerHeight - topH - bottomH - margins);
+
+    // pick the smaller of width target and vertical allowance
+    const rawTarget = Math.max(0, Math.min(vwTarget, maxByHeight));
+
+    // snap to an integer multiple of module count to avoid anti-alias gaps
+    const moduleSize = Math.max(1, Math.floor(rawTarget / moduleCount));
+    return moduleSize * moduleCount; // final integer pixel size
+  }
+
+  // Render from matrix -> our own SVG (no background, no transforms)
+  function renderQRCode(text) {
+    const qr = buildQR(text);
+    const n = qr.getModuleCount();
+
+    const sizePx = computeBestSize(n);
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', `0 0 ${n} ${n}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.setAttribute('shape-rendering', 'crispEdges'); // remove “grid lines”
+    svg.style.width  = sizePx + 'px';
+    svg.style.height = sizePx + 'px';
+    svg.style.display = 'block';
+
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
+        if (qr.isDark(r, c)) {
+          const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          rect.setAttribute('x', c);
+          rect.setAttribute('y', r);
+          rect.setAttribute('width', 1);
+          rect.setAttribute('height', 1);
+          rect.setAttribute('fill', '#000');
+          // crisp edges at rect level too (Safari)
+          rect.setAttribute('shape-rendering', 'crispEdges');
+          svg.appendChild(rect);
+        }
+      }
+    }
+
+    qrcodeDiv.innerHTML = '';
+    qrcodeDiv.appendChild(svg);
+  }
+
+  /* ---------- App logic ---------- */
+  function generateCode(color) {
+    const prefix = String(Math.floor(Math.random() * 900) + 100);
+    const suffixMap = {
+      "BROWN": "BROWN",
+      "PURPLE": "PURPLE",
+      "PINK": "PINK",
+      "GREEN": "GREEN",
+      "BLUE": "BLUE",
+      "GREY": "GREY",
+      "BROWN BOX": "brownbox",
+      "GLASS BOX": "glassbox",
+    };
+    const suffix = suffixMap[color] || "UNKNOWN00";
+    const digits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
+    return `${prefix}${suffix}${digits}`;
+  }
+
+  function updateColors(color) {
+    const c = colors[color];
+    document.body.style.backgroundColor = c.bg;
+    colorButton.style.backgroundColor   = c.accent;
+    generateBtn.style.backgroundColor   = c.accent;
+    labelText.textContent               = c.label;
+    labelText.style.color               = c.accent;
+  }
+
+  function regenerateAll(selectedColor) {
+    updateColors(selectedColor);
+    lastCode = generateCode(selectedColor);
+    renderQRCode(lastCode);
+    codeText.textContent = lastCode;
+  }
+
+  /* ---------- Events ---------- */
+  if (colorMenu) {
+    colorMenu.querySelectorAll('div').forEach(item => {
+      item.addEventListener('click', () => {
+        const newColor = item.textContent.trim();
+        colorButton.textContent = newColor;
+        regenerateAll(newColor);
+      });
+    });
+  }
+
+  generateBtn.addEventListener('click', () => {
+    regenerateAll(colorButton.textContent.trim());
+  });
+
+  // Reflow on resize to keep 50vw target and avoid overlap/gaps
+  window.addEventListener('resize', () => {
+    if (lastCode) renderQRCode(lastCode);
+  });
+
+  /* ---------- Init ---------- */
+  window.addEventListener('load', () => {
+    colorButton.textContent = 'PINK';
+    regenerateAll('PINK');
+  });
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
